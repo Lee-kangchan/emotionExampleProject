@@ -39,10 +39,11 @@
 <nav>
     <h1>감성정보 통합 분석 시스템</h1>
     <br>
-    <li><a href="#html"> 사용자 감성 정보 조회</a></li>
-    <li><a href="#css">사용자 감성 통합 분석</a></li>
-    <li><a href="#js">모니터링</a></li>
-    <li style="margin-top: 100%"><a href="#react">로그인</a></li>
+    <li><a href="/v1/emotion/user"> 사용자 감성 정보 조회</a></li>
+    <li><a href="/v1/emotion/user/Default">사용자 감성 통합 분석</a></li>
+    <li><a href="/v1/emotion/user/Graph">모니터링</a></li>
+    <li th:if="${user!=null}" style="margin-top: 100%"><a href="/v1/logout">로그아웃</a></li>
+    <li th:if="${user==null}" style="margin-top: 100%"><a href="/v1/login">로그인</a></li>
 
 </nav>
 <div style="margin-left: 220px" class="row">
@@ -87,27 +88,39 @@
         </div>
     </div>
 </div>
+<script th:inline="javascript">
+    var data = [[${result}]];
+    var faceArr = new Array();
+    var voiceArr = new Array();
+    var brainArr = new Array();
+    data.forEach(function(item){
+        faceArr.push(item.face)
+        voiceArr.push(item.voice)
+        brainArr.push(item.brain)
+    })
+</script>
 <script>
+
     const colors = ['red','Green','blue'];
     // const datas = [589, 445, ...] 선언하고 아래서 datas 변수만 써줘도 된다.
     var ctx = document.getElementById('myChart');
     var chartData = {
         labels: [1,2,3,4,5,6,7],
         datasets:
-            [{ data: [589, 445, 483, 503, 689, 692, 634],
+            [{ data: faceArr,
                 backgroundColor: 'transparent',
                 borderColor: colors[0],
                 borderWidth: 3,
                 label:"face",
                 pointBackgroundColor: colors[1]
             }, {
-                data: [346, 503, 609, 503, 589, 483, 445],
+                data: voiceArr,
                 backgroundColor: 'transparent',
                 borderColor: colors[1],
                 label:"voice",
                 borderWidth: 3, },
                 {
-                data: [542, 223, 349, 153, 449, 353, 566],
+                data: brainArr,
                 backgroundColor: 'transparent',
                 borderColor: colors[2],
                 label:"brain",

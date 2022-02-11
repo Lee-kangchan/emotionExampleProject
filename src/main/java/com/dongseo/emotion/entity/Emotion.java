@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Entity(name ="emotion")
+@Entity(name ="result")
 public class Emotion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
